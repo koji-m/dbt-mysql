@@ -82,6 +82,7 @@ class MySQLConnectionManager(SQLConnectionManager):
 
         try:
             connection.handle = mysql.connector.connect(**kwargs)
+            connection.handle.cursor().execute("set session default_storage_engine='ColumnStore';")
             connection.state = 'open'
         except mysql.connector.Error as e:
             logger.debug("Got an error when attempting to open a mysql "
